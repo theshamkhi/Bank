@@ -228,7 +228,7 @@ public class Menu {
         }
     }
 
-    // Méthodes utilitaires simples
+    // Methodes utilitaires simples
     private boolean verifierFormatCode(String code) {
         if (code.length() != 9) return false;
         if (!code.startsWith("CPT-")) return false;
