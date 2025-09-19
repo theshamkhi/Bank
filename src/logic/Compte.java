@@ -13,7 +13,6 @@ public abstract class Compte {
         this.listeOperations = new ArrayList<>();
     }
 
-    // Getters
     public String getCode() {
         return code;
     }
@@ -26,13 +25,11 @@ public abstract class Compte {
         return listeOperations;
     }
 
-    // Méthode
     public void verser(double montant, String source) {
         solde += montant;
         listeOperations.add(new Versement(montant, source));
     }
 
-    // Méthodes abstraites
     public abstract boolean retirer(double montant, String destination);
     public abstract double calculerInteret();
     public abstract void afficherDetails();

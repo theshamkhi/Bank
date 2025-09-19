@@ -32,8 +32,8 @@ public class CompteEpargne extends Compte {
         System.out.println("=== COMPTE EPARGNE ===");
         System.out.println("Code: " + code);
         System.out.println("Solde: " + solde + " MAD");
-        System.out.println("Taux d'intérêt: " + (tauxInteret * 100) + "%");
-        System.out.println("Intérêts: " + calculerInteret() + " MAD");
-        System.out.println("Nombre d'opérations: " + listeOperations.size());
+        System.out.println("Taux d interet: " + (tauxInteret * 100) + "%");
+        System.out.println("Interets: " + calculerInteret() + " MAD");
+        System.out.println("Nombre d operations: " + listeOperations.size());
     }
 }

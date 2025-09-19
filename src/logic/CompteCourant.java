@@ -32,7 +32,7 @@ public class CompteCourant extends Compte {
         System.out.println("=== COMPTE COURANT ===");
         System.out.println("Code: " + code);
         System.out.println("Solde: " + solde + " MAD");
-        System.out.println("Découvert autorisé: " + decouvert + " MAD");
-        System.out.println("Nombre d'opérations: " + listeOperations.size());
+        System.out.println("Decouvert autorise: " + decouvert + " MAD");
+        System.out.println("Nombre d operations: " + listeOperations.size());
     }
 }
