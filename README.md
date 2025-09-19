@@ -60,7 +60,7 @@ src/
 ```bash
 # Cloner le repository
 git clone https://github.com/theshamkhi/Bank.git
-cd banking-system/src
+cd src
 
 # Compiler
 javac logic/*.java service/*.java ui/*.java Main.java
@@ -118,23 +118,23 @@ Montant: 300.0
 ### Test Complet Recommandé
 
 1. **Création de comptes**
-   - Compte courant : CPT-12345 (découvert 500)
-   - Compte épargne : CPT-67890 (taux 5%)
+    - Compte courant : CPT-12345 (découvert 500)
+    - Compte épargne : CPT-67890 (taux 5%)
 
 2. **Opérations de base**
-   - Versement 1000€ sur CPT-12345
-   - Versement 2000€ sur CPT-67890
-   - Retrait 1200€ de CPT-12345 (test découvert)
-   - Virement 300€ de CPT-67890 vers CPT-12345
+    - Versement 1000€ sur CPT-12345
+    - Versement 2000€ sur CPT-67890
+    - Retrait 1200€ de CPT-12345 (test découvert)
+    - Virement 300€ de CPT-67890 vers CPT-12345
 
 3. **Consultations**
-   - Vérification des soldes
-   - Consultation de l'historique
+    - Vérification des soldes
+    - Consultation de l'historique
 
 4. **Tests d'erreur**
-   - Code invalide : `CPT-123`
-   - Montant négatif : `-100`
-   - Compte inexistant : `CPT-99999`
+    - Code invalide : `CPT-123`
+    - Montant négatif : `-100`
+    - Compte inexistant : `CPT-99999`
 
 ## 🔧 Technologies Utilisées
 
