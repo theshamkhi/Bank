@@ -38,10 +38,10 @@ public class ValidationUtil {
                 scanner.nextLine();
 
                 if (amount <= 0) {
-                    System.out.println("Le montant doit être positif!");
+                    System.out.println("Le montant doit etre positif!");
                 }
             } catch (Exception e) {
-                System.out.println("Erreur de saisie, veuillez réessayer.");
+                System.out.println("Erreur de saisie, veuillez reessayer.");
                 scanner.nextLine();
                 amount = -1;
             }
@@ -60,7 +60,7 @@ public class ValidationUtil {
                     System.out.println("Format invalide! Format attendu: CPT-XXXXX (ex: CPT-12345)");
                 }
             } catch (Exception e) {
-                System.out.println("Erreur de saisie, veuillez réessayer.");
+                System.out.println("Erreur de saisie, veuillez reessayer.");
                 code = "";
             }
         } while (!isValidAccountCode(code));
@@ -81,12 +81,48 @@ public class ValidationUtil {
                 scanner.nextLine();
                 return choice;
             } catch (Exception e) {
-                System.out.println("Erreur de saisie, veuillez réessayer.");
+                System.out.println("Erreur de saisie, veuillez reessayer.");
                 scanner.nextLine();
                 choice = -1;
             }
         } while (choice == -1);
 
         return choice;
+    }
+
+    public static double readInterestRate(Scanner scanner, String message) {
+        double rate;
+        do {
+            System.out.print(message);
+            try {
+                String input = scanner.nextLine().trim();
+
+                // Si l'utilisateur tape avec le symbole %
+                if (input.endsWith("%")) {
+                    String numberPart = input.substring(0, input.length() - 1);
+                    double percentage = Double.parseDouble(numberPart);
+                    rate = percentage / 100.0; // Convertir en décimal
+                } else {
+                    rate = Double.parseDouble(input);
+                }
+
+                if (rate < 0) {
+                    System.out.println("Le taux d'interet ne peut pas etre negatif!");
+                    rate = -1;
+                } else if (rate > 1 && !input.endsWith("%")) {
+                    System.out.println("Attention: Le taux semble eleve. Utilisez 0.05 pour 5% ou tapez 5%");
+                    rate = -1;
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Format invalide! Utilisez 0.05 ou 5%");
+                rate = -1;
+            } catch (Exception e) {
+                System.out.println("Erreur de saisie, veuillez reessayer.");
+                rate = -1;
+            }
+        } while (rate < 0);
+
+        return rate;
     }
 }
