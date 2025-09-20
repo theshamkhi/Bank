@@ -2,6 +2,7 @@ package ui;
 
 import service.BankManager;
 import logic.*;
+import util.ValidationUtil;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 
@@ -65,55 +66,44 @@ public class Menu {
     }
 
     private int lireChoix() {
-        while (!scanner.hasNextInt()) {
-            System.out.print("Entrez un nombre: ");
-            scanner.next();
-        }
-        int choix = scanner.nextInt();
-        scanner.nextLine();
-        return choix;
+        return ValidationUtil.readMenuChoice(scanner, "");
     }
 
     private void creerCompte() {
-        System.out.println("\n--- Creer un compte ---");
+        System.out.println("\n--- Créer un compte ---");
 
-        System.out.print("Code du compte (CPT-XXXXX): ");
-        String code = scanner.nextLine();
+        try {
+            String code = ValidationUtil.readValidAccountCode(scanner, "Code du compte (CPT-XXXXX): ");
 
-        // Vérifier le format
-        if (!verifierFormatCode(code)) {
-            System.out.println("Erreur: Format invalide! Utilisez CPT-12345");
-            return;
-        }
+            System.out.println("Type de compte:");
+            System.out.println("1. Compte Courant");
+            System.out.println("2. Compte Epargne");
+            int type = ValidationUtil.readMenuChoice(scanner, "Votre choix: ");
 
-        System.out.println("Type de compte:");
-        System.out.println("1. Compte Courant");
-        System.out.println("2. Compte Epargne");
-        System.out.print("Votre choix: ");
-        int type = lireChoix();
+            if (type == 1) {
+                double decouvert = ValidationUtil.readPositiveAmount(scanner, "Montant du decouvert autorise: ");
 
-        if (type == 1) {
-            System.out.print("Montant du decouvert: ");
-            double decouvert = lireMontant();
+                if (bankManager.creerCompteCourant(code, decouvert)) {
+                    System.out.println("Compte courant cree avec succes!");
+                } else {
+                    System.out.println("Erreur: Ce compte existe deja!");
+                }
 
-            if (bankManager.creerCompteCourant(code, decouvert)) {
-                System.out.println("Compte courant cree avec succes!");
+            } else if (type == 2) {
+                System.out.print("Taux d interet (ex: 0.05 pour 5%): ");
+                double taux = scanner.nextDouble();
+                scanner.nextLine();
+
+                if (bankManager.creerCompteEpargne(code, taux)) {
+                    System.out.println("Compte epargne cree avec succes!");
+                } else {
+                    System.out.println("Erreur: Ce compte existe deja!");
+                }
             } else {
-                System.out.println("Erreur: Ce compte existe deja!");
+                System.out.println("Type invalide!");
             }
-
-        } else if (type == 2) {
-            System.out.print("Taux d interet (ex: 0.05 pour 5%): ");
-            double taux = scanner.nextDouble();
-            scanner.nextLine();
-
-            if (bankManager.creerCompteEpargne(code, taux)) {
-                System.out.println("Compte epargne cree avec succes!");
-            } else {
-                System.out.println("Erreur: Ce compte existe deja!");
-            }
-        } else {
-            System.out.println("Type invalide!");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la creation du compte: " + e.getMessage());
         }
     }
 
@@ -168,7 +158,7 @@ public class Menu {
         System.out.print("Code du compte destination: ");
         String codeDestination = scanner.nextLine();
 
-        System.out.print("Montant a virer: ");
+        System.out.print("Montant à virer: ");
         double montant = lireMontant();
 
         if (bankManager.faireVirement(codeSource, codeDestination, montant)) {
@@ -226,20 +216,6 @@ public class Menu {
                 System.out.println("Destination: " + ((Retrait) op).getDestination());
             }
         }
-    }
-
-    // Methodes utilitaires simples
-    private boolean verifierFormatCode(String code) {
-        if (code.length() != 9) return false;
-        if (!code.startsWith("CPT-")) return false;
-
-        String chiffres = code.substring(4);
-        for (int i = 0; i < chiffres.length(); i++) {
-            if (!Character.isDigit(chiffres.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private double lireMontant() {

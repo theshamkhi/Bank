@@ -19,7 +19,7 @@ public class BankManager {
         return true;
     }
 
-    // Creer un compte epargne
+    // Creer un compte épargne
     public boolean creerCompteEpargne(String code, double tauxInteret) {
         if (comptes.containsKey(code)) {
             return false; // Compte existe deja
